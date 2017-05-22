@@ -39,7 +39,7 @@ function fetch (callback) {
       var reg = /<span lang="EN-US">(.*?)<span>(&nbsp;&nbsp;&nbsp;&nbsp;)+ <\/span><\/span>(<\/b><b>)?<span style="font-family: 宋体">(.*?)<\/span>/g
 
       while ((current = reg.exec(rawData)) !== null) {
-        result[current[1]] = current[3].trim();
+        result[current[1]] = current[4].trim();
         console.log(result[current[1]])
       }
       return callback(null, result)
