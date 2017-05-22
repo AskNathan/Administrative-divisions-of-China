@@ -36,10 +36,11 @@ function fetch (callback) {
     res.on('end', function () {
       var current
       var result = {}
-      var reg = /<span lang="EN-US">(.*?)<span>&nbsp;&nbsp;&nbsp;&nbsp; <\/span><\/span><span style="font-family: 宋体">(.*?)<\/span>/g
+      var reg = /<span lang="EN-US">(.*?)<span>&nbsp;&nbsp;&nbsp;&nbsp; <\/span><\/span>(<\/b><b>)?<span style="font-family: 宋体">(.*?)<\/span>/g
 
       while ((current = reg.exec(rawData)) !== null) {
-        result[current[1]] = current[2].trim()
+        result[current[1]] = (!!current[2]&&current[2].trim().indexOf('</b>')==-1)?current[2].trim():current[3].trim();
+        console.log(result[current[1]])
       }
       return callback(null, result)
     })
@@ -66,7 +67,8 @@ function fetchStreets (area, total, callback) {
 
   // 数据截止2015年9月30日（发布时间：2016-07-27）
   //http.get('http://www.stats.gov.cn/tjsj/tjbz/tjyqhdmhcxhfdm/2015/' + html, function (res) {
-  http.get('http://www.stats.gov.cn/tjsj/tjbz/tjyqhdmhcxhfdm/2016/' + html, function (res) {
+  var url = 'http://www.stats.gov.cn/tjsj/tjbz/tjyqhdmhcxhfdm/2016/' + html;
+  http.get(url, function (res) {
 
     var bufferHelper = new BufferHelper()
     var statusCode = res.statusCode
