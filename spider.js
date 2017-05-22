@@ -42,7 +42,7 @@ function fetch (callback) {
         console.log(current[1]+'=====>>'+current[5].trim())
         result[current[1]] = current[5].trim();
       }
-      process.exit(0);
+      // process.exit(0);
       return callback(null, result)
     })
   })
